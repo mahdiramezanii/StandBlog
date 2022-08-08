@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load render_partial %}
+{% load static %}
+
+{% block titel %}
+    Blog
+{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+        <section class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-content">
+                            <h4>Recent Posts</h4>
+                            <h2>Our Recent Blog Entries</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Banner Ends Here -->
+
+    <section class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-content">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <span>Stand Blog HTML5 Template</span>
+                                <h4>Creative HTML Template For Bloggers!</h4>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="main-button">
+                                    <a href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download
+                                        Now!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="blog-posts grid-system">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="all-blog-posts">
+                        <div class="row">
+                            {% for i in post %}
+                                <div class="col-lg-6">
+                                    <div class="blog-post">
+                                        <div class="blog-thumb">
+                                            <img src="{{ i.image.url }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <span>{{ i.category.all.first.titel }}</span>
+                                            <a href="post-details.html"><h4>{{ i.titel }}</h4></a>
+                                            <ul class="post-info">
+                                                <li><a href="#">{{ i.auther.get_full_name }}</a></li>
+                                                <li><a href="#">{{ i.date }}</a></li>
+                                                <li><a href="#">12 Comments</a></li>
+                                            </ul>
+                                            <p>{{ i.show_text }}</p>
+                                            <div class="post-options">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <ul class="post-tags">
+                                                            <li><i class="fa fa-tags"></i></li>
+                                                            <li><a href="#">Best Templates</a>,</li>
+                                                            <li><a href="#">TemplateMo</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            {% if post.has_other_pages %}
+                                <div class="col-lg-12">
+                                    <ul class="page-numbers">
+
+                                        {% if post.has_previous %}
+                                            <li><a href="?page={{ post.previous_page_number }}{% if request.GET.q%}&q={{ request.GET.q }}{% endif %}"><i class="fa fa-angle-double-left"></i></a></li>
+
+                                        {% endif %}
+
+                                        {% for i in post.paginator.page_range %}
+                                            {% if post.number == i %}
+                                                <li class="active"><a href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.get.q }}{% endif %}">{{ i }}</a></li>
+                                            {% else %}
+                                                <li><a href="?page={{ i }}{% if request.GET.q%}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if post.has_next %}
+                                            <li><a href="?page={{ post.next_page_number }}{% if request.GET.q%}&q={{ request.GET.q }}{% endif %}"><i
+                                                    class="fa fa-angle-double-right"></i></a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+                {% render_partial "Home:recent" %}
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

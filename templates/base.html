@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "include/header.html" %}
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    {% include "include/header2.html" %}
+
+
+
+
+
+
+{% block content %}
+
+{% endblock %}
+
+
+
+
+
+
+    {% include "include/footer.html" %}
+
+    <!-- Bootstrap core JavaScript -->
+    {% include "include/scripts.html" %}
+
+  </body>
+</html>

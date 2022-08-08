@@ -1,0 +1,66 @@
+{% load static %}
+<header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><h2>Stand Blog<em>.</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+
+
+
+              <li class="nav-item {% if request.resolver_match.url_name == "Home" %}active{% endif %}">
+                <a class="nav-link" href="{% url "Home:Home" %}">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+
+              <li class="nav-item {% if request.resolver_match.url_name == "Blog" %}active{% endif %}">
+                <a class="nav-link" href="{% url "Blog:Blog" %}">All Articles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == "contact_us" %}active{% endif %}" href="{% url "contact_us:contact_us" %}">Contact Us</a>
+              </li>
+
+            {% if request.user.is_authenticated %}
+
+                    {% if request.user.profile.image %}
+                    <li class="nav-item">
+                        <img src="{{ user.profile.image.url }}"  height="40px" width="40px" style="border-radius: 50px" alt="">
+              </li>
+                        {% else %}
+
+                        <li class="nav-item">
+                        <img src="{% static "Acount/images/profile/index1.png" %}" style="height: 40px" width="40px" alt="">
+              </li>
+
+                        {% endif %}
+                <li class="nav-item">
+                <a class="nav-link" href="#">{{ user.username }}</a>
+              </li>
+
+                    <li class="nav-item">
+                <a class="nav-link" href="{% url "Acount:logout" %}">Logout</a>
+              </li>
+
+              {% else %}
+
+                    <li class="nav-item">
+                <a class="nav-link" href="{% url "Acount:login" %}">Register/Login</a>
+              </li>
+
+
+
+                {% endif %}
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>

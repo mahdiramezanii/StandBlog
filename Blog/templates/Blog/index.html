@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for p in object_list %}
+<p>{{ p.text }}</p>
+    <img src="{{ p.image.url }}" alt="">
+{% endfor %}
+</body>
+</html>

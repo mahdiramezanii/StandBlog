@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+        <section class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-content">
+                            <h4>Post Details</h4>
+                            <h2>Single blog post</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Banner Ends Here -->
+
+    <section class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-content">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <span>Stand Blog HTML5 Template</span>
+                                <h4>Creative HTML Template For Bloggers!</h4>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="main-button">
+                                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download
+                                        Now!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="blog-posts grid-system">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="all-blog-posts">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="blog-post">
+                                    <div class="blog-thumb">
+                                        <img src="{{ post.image.url }}" alt="">
+                                    </div>
+                                    <div class="down-content">
+                                        <span>Lifestyle</span>
+                                        <a href="post-details.html"><h4>{{ post.titel }}</h4></a>
+                                        <ul class="post-info">
+                                            <li><a href="#">{{ post.auther.get_full_name }}</a></li>
+                                            <li><a href="#">{{ post.date }}</a></li>
+                                            <li><a href="#">10 Comments</a></li>
+                                        </ul>
+                                        <p>{{ post.text }}</p>
+                                        <div class="post-options">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <ul class="post-tags">
+                                                        {% if like %}
+                                                        <li><a ><i class="fa fa-heart" id="like"></i></a>{{ post.like.all.count }}</li>
+                                                            {% else %}
+                                                             <li><a><i class="fa fa-heart-o" id="like"></i></a>{{ post.like.all.count }}</li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                                <div class="col-6">
+                                                    <ul class="post-share">
+                                                        <li><i class="fa fa-share-alt"></i></li>
+                                                        <li><a href="#">Facebook</a>,</li>
+                                                        <li><a href="#"> Twitter</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="sidebar-item comments">
+                                    <div class="sidebar-heading">
+                                        <h2>4 comments</h2>
+                                    </div>
+                                    <div class="content">
+                                        <ul>
+
+                                            {% for comment in post.article.all %}
+
+                                                {% if comment.parent == None %}
+                                                    <li>
+                                                        <div class="author-thumb">
+                                                            <img src="{% static "Blog/assets/images/comment-author-02.jpg" %}"
+                                                                 alt="">
+                                                        </div>
+                                                        <div class="right-content">
+                                                            <h4>{{ comment.user.username }}<span>{{ comment.created }}</span>
+                                                            </h4>
+                                                            <p> {{ comment.body }}</p>
+                                                            <button class="btn btn-danger btn-group" onclick="set_valu({{ comment.id }})">replay</button>
+                                                        </div>
+                                                    </li>
+                                                {% else %}
+
+                                                    {% for replay in comment.parent.replay.all %}
+                                                        <li class="replied">
+                                                            <div class="author-thumb">
+                                                                <img src="{% static "Blog/assets/images/comment-author-02.jpg" %}"
+                                                                     alt="">
+                                                            </div>
+                                                            <div class="right-content">
+                                                                <h4>{{ replay.user.username }}<span>{{ replay.created }}</span>
+                                                                </h4>
+                                                                <p>{{ replay.body }}</p>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="sidebar-item submit-comment">
+                                    <div class="sidebar-heading">
+                                        <h2>Your comment</h2>
+                                    </div>
+
+                                    {% if request.user.is_authenticated %}
+                                    <div class="content">
+
+                                        <form id="comment" action="#" method="post">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <input type="hidden" id="parent_id" name="parent_id" value="">
+                                                <div class="col-lg-12">
+                                                    <fieldset>
+                                                        <textarea name="comment" rows="6" id="body"
+                                                                  placeholder="Type your comment"
+                                                                  required=""></textarea>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <fieldset>
+                                                        <button type="submit" id="form-submit" onclick="respone_replay()" class="main-button">
+                                                            Submit
+                                                        </button>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                        {% else %}
+
+                                        <a href="{% url "Acount:login" %}"><p class="bg-danger text-dark form-control">For send comment pleas login</p></a>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% include "include/sidebar.html" %}
+            </div>
+        </div>
+    </section>
+    <script>
+    function set_valu(id){
+
+        document.getElementById('parent_id').value=id;
+        window.location.href="#body"
+
+    }
+
+    function respone_replay(){
+
+        alert("نظر شما ارسال شد")
+    }
+
+    function like(slug,id){
+    var element=document.getElementById("like")
+    $.get('blog/like/${slug}/${id}').then(resposne => {
+        if(resposne["response"]==="like"){
+            element.className="fa fa-heart"
+        }else{
+            element.className="fa fa-heart"
+        }
+    } )
+}
+
+    </script>
+{% endblock %}
